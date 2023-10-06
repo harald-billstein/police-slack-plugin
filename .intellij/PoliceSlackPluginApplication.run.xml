@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="PoliceSlackPluginApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <option name="ACTIVE_PROFILES" value="local" />
+    <module name="police-slack-plugin" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="se.harbil.policeslackplugin.PoliceSlackPluginApplication" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="se.harbil.policeslackplugin.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

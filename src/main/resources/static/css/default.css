@@ -1,0 +1,41 @@
+body, html {
+  background: url("../images/background.jpeg");
+  background-size: cover;
+}
+.headline {
+  color: white;
+  font-family: "Major Mono Display", serif;
+  letter-spacing: 12px;
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+.ingress {color: white;
+  font-family: "Major Mono Display", serif;
+}
+.bold{
+  color: #005cbf;
+  font-size: 1.5em;
+}
+
+.arrow {
+  color: #1e7e34;
+  font-size: 3em;
+}
+.command {
+  color: white;
+  background: black;
+}
+.text-container {
+  margin-top: 2em;
+}
+.image {
+max-height: 35em;
+}
+.icon {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  max-height: 4em;
+}
+.icon-container {
+  margin-top: 1em;
+}

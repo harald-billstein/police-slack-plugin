@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link th:href="@{/css/default.css}" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title>Crimebot</title>
+</head>
+<body>
+<div class="container">
+  <div class="col-12">
+    <h1 class="text-center headline">Crimebot</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="text-container">
+        <p class="text-left ingress">
+          <strong class="bold">Crimebot</strong>
+          är en slackbot som svarar på frågor om vilka brott som har rapporterats. Du kan fråga om
+          brott baserat på län och sökord. Ärende som hittas på polisen hemsida kommer rapporteras
+          privat till dig i kanalen du utförde kommandot.
+        </p>
+        <br>
+        <h5 class="ingress">Sökstruktur:</h5>
+        <p class="command">/cb län sökord</p>
+        <p class="command">/cb län</p>
+        <h5 class="ingress">Exempel:</h5>
+        <p class="command">/cb skåne inbrott</p>
+        <p class="command">/cb skåne</p>
+        <p class="command">/cb help</p>
+        <p class="ingress"> Crimebot was made for the swedish market. Crimebot do not collect or
+          save any personal information. It was made by me: harald.billstein@gmail.com. Click the slack icon on the bottom of the page to install</p>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="image-container text-center">
+        <img class="img-fluid image" src="/images/iphone.png" alt="iPhoneImage">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="icon-container">
+    <div class="row">
+      <div class="col-sm-4 text-center">
+        <div class="icon-container text-center">
+          <a href="https://github.com/harald-billstein/crimeBot">
+            <img class="icon" src="/images/github.png" alt="Github">
+          </a>
+        </div>
+      </div>
+      <div class="col-sm-4 text-center">
+        <div class="icon-container text-center">
+          <a href="https://slack.com/oauth/v2/authorize?client_id=293978802896.959666968801&scope=commands">
+            <img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x">
+          </a>
+        </div>
+      </div>
+      <div class="col-sm-4 text-center">
+        <div class="icon-container text-center">
+          <a href="https://harbil.se">
+            <img class="icon" src="/images/donate.png" alt="Donate">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
