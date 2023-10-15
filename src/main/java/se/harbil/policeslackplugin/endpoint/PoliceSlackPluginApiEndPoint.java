@@ -11,6 +11,7 @@ import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,13 +35,13 @@ public class PoliceSlackPluginApiEndPoint {
     private String slackRedirectUrl;
 
 
-    @RequestMapping("/report")
+    @PostMapping("/report")
     public void getReport(@RequestParam Map<String, String> slackBody) {
         RequestFromSlack requestFromSlack = SlackRequestMapper.mapSlackBody(slackBody);
         slackControllerImpl.startAsyncAnswer(requestFromSlack);
     }
 
-    @RequestMapping("/authorize")
+    @PostMapping("/authorize")
     public String getAuthorize(@RequestHeader Map<String, String> headers, @RequestParam String code,
         @RequestParam String state) {
         log.info("Authorize header: {} code: {} code: {}", headers, code, state);
