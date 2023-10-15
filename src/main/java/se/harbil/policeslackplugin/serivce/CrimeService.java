@@ -67,16 +67,13 @@ public class CrimeService {
         doc = builder.parse(src);
 
         for (int i = 0; i < doc.getElementsByTagName("item").getLength(); i++) {
-            PoliceRssResponseModel response = new PoliceRssResponseModel();
-            response.setTitle(doc.getElementsByTagName("title").item(i + 1).getTextContent());
-            response.setLink(doc.getElementsByTagName("link").item(i + 1).getTextContent());
-            response.setGuid(doc.getElementsByTagName("guid").item(i).getTextContent());
-            response.setDescription(
-                doc.getElementsByTagName("description").item(i + 1).getTextContent());
-            response.setGuid(doc.getElementsByTagName("guid").item(i).getTextContent());
-            response.setPubDate(doc.getElementsByTagName("pubDate").item(i).getTextContent());
-
-            policeRssResponseModelList.add(response);
+            policeRssResponseModelList.add(PoliceRssResponseModel.builder()
+                .title(doc.getElementsByTagName("title").item(i + 1).getTextContent())
+                .link(doc.getElementsByTagName("link").item(i + 1).getTextContent())
+                .guid(doc.getElementsByTagName("guid").item(i).getTextContent())
+                .description(doc.getElementsByTagName("description").item(i + 1).getTextContent())
+                .guid(doc.getElementsByTagName("guid").item(i).getTextContent())
+                .pubDate(doc.getElementsByTagName("pubDate").item(i).getTextContent()).build());
         }
 
         return policeRssResponseModelList;
