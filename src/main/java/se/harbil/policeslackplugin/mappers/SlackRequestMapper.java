@@ -1,38 +1,31 @@
 package se.harbil.policeslackplugin.mappers;
 
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import se.harbil.policeslackplugin.enums.SlackRequestParameters;
 import se.harbil.policeslackplugin.model.RequestFromSlack;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import java.util.Map;
 
 @Slf4j
 public class SlackRequestMapper {
+
     private static final String EMPTY_SPACE = " ";
 
-
-    @ExceptionHandler({NullPointerException.class})
     public static RequestFromSlack mapSlackBody(Map<String, String> slackBody) {
-        log.info("Mapping request: {}", slackBody);
-
-        RequestFromSlack requestFromSlack = new RequestFromSlack();
-        requestFromSlack.setToken(slackBody.get(SlackRequestParameters.TOKEN.getName()));
-        requestFromSlack.setTeam_id(slackBody.get(SlackRequestParameters.TEAM_ID.getName()));
-        requestFromSlack.setTeam_domain(slackBody.get(SlackRequestParameters.TEAM_DOMAIN.getName()));
-        requestFromSlack.setChannel_id(slackBody.get(SlackRequestParameters.CHANNEL_ID.getName()));
-        requestFromSlack.setChannel_name(slackBody.get(SlackRequestParameters.CHANNEL_NAME.getName()));
-        requestFromSlack.setUser_id(slackBody.get(SlackRequestParameters.USER_ID.getName()));
-        requestFromSlack.setUser_name(slackBody.get(SlackRequestParameters.USER_NAME.getName()));
-        requestFromSlack.setCommand(slackBody.get(SlackRequestParameters.COMMAND.getName()));
-        requestFromSlack.setText(slackBody.get(SlackRequestParameters.TEXT.getName()));
-        requestFromSlack.setResponse_url(slackBody.get(SlackRequestParameters.RESPONSE_URL.getName()));
-        requestFromSlack.setTrigger_id(slackBody.get(SlackRequestParameters.TRIGGER_ID.getName()));
-        requestFromSlack.setCounty(extractCounty(slackBody.get(SlackRequestParameters.TEXT.getName())));
-        requestFromSlack.setWord(extractWord(slackBody.get(SlackRequestParameters.TEXT.getName())));
-        return requestFromSlack;
+        return RequestFromSlack.builder()
+            .token(slackBody.get(SlackRequestParameters.TOKEN.getName()))
+            .teamId(slackBody.get(SlackRequestParameters.TEAM_ID.getName()))
+            .teamDomain(slackBody.get(SlackRequestParameters.TEAM_DOMAIN.getName()))
+            .channelId(slackBody.get(SlackRequestParameters.CHANNEL_ID.getName()))
+            .channelName(slackBody.get(SlackRequestParameters.CHANNEL_NAME.getName()))
+            .userId(slackBody.get(SlackRequestParameters.USER_ID.getName()))
+            .userName(slackBody.get(SlackRequestParameters.USER_NAME.getName()))
+            .command(slackBody.get(SlackRequestParameters.COMMAND.getName()))
+            .text(slackBody.get(SlackRequestParameters.TEXT.getName()))
+            .responseUrl(slackBody.get(SlackRequestParameters.RESPONSE_URL.getName()))
+            .triggerId(slackBody.get(SlackRequestParameters.TRIGGER_ID.getName()))
+            .county(extractCounty(slackBody.get(SlackRequestParameters.TEXT.getName())))
+            .word(extractWord(slackBody.get(SlackRequestParameters.TEXT.getName())))
+            .build();
     }
 
     private static String extractWord(String word) {

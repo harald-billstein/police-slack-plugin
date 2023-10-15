@@ -26,8 +26,8 @@ public class SlackControllerImpl implements SlackController {
 
         new Thread(() -> {
             log.info("Creating async response to user: {} url: {} county: {} word: {}",
-                request.getUser_name(),
-                request.getResponse_url(),
+                request.getUserName(),
+                request.getResponseUrl(),
                 request.getCounty(),
                 request.getWord());
 
@@ -55,7 +55,7 @@ public class SlackControllerImpl implements SlackController {
 
         }
 
-        slackAnswerService.sendReply(requestFromSlack.getResponse_url(), responseToSlack);
+        slackAnswerService.sendReply(requestFromSlack.getResponseUrl(), responseToSlack);
     }
 
     private boolean isInvalidOrHelpCommand(RequestFromSlack requestFromSlack) {
