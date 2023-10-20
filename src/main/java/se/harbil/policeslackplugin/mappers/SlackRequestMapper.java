@@ -1,34 +1,47 @@
 package se.harbil.policeslackplugin.mappers;
 
+import static se.harbil.policeslackplugin.enums.SlackRequestParameters.CHANNEL_ID;
+import static se.harbil.policeslackplugin.enums.SlackRequestParameters.CHANNEL_NAME;
+import static se.harbil.policeslackplugin.enums.SlackRequestParameters.COMMAND;
+import static se.harbil.policeslackplugin.enums.SlackRequestParameters.RESPONSE_URL;
+import static se.harbil.policeslackplugin.enums.SlackRequestParameters.TEAM_DOMAIN;
+import static se.harbil.policeslackplugin.enums.SlackRequestParameters.TEAM_ID;
+import static se.harbil.policeslackplugin.enums.SlackRequestParameters.TEXT;
+import static se.harbil.policeslackplugin.enums.SlackRequestParameters.TOKEN;
+import static se.harbil.policeslackplugin.enums.SlackRequestParameters.TRIGGER_ID;
+import static se.harbil.policeslackplugin.enums.SlackRequestParameters.USER_ID;
+import static se.harbil.policeslackplugin.enums.SlackRequestParameters.USER_NAME;
+
 import java.util.Map;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import se.harbil.policeslackplugin.enums.SlackRequestParameters;
 import se.harbil.policeslackplugin.model.RequestFromSlack;
 
 @Slf4j
+@UtilityClass
 public class SlackRequestMapper {
 
     private static final String EMPTY_SPACE = " ";
 
-    public static RequestFromSlack mapSlackBody(Map<String, String> slackBody) {
+    public RequestFromSlack mapSlackBody(Map<String, String> params) {
         return RequestFromSlack.builder()
-            .token(slackBody.get(SlackRequestParameters.TOKEN.getName()))
-            .teamId(slackBody.get(SlackRequestParameters.TEAM_ID.getName()))
-            .teamDomain(slackBody.get(SlackRequestParameters.TEAM_DOMAIN.getName()))
-            .channelId(slackBody.get(SlackRequestParameters.CHANNEL_ID.getName()))
-            .channelName(slackBody.get(SlackRequestParameters.CHANNEL_NAME.getName()))
-            .userId(slackBody.get(SlackRequestParameters.USER_ID.getName()))
-            .userName(slackBody.get(SlackRequestParameters.USER_NAME.getName()))
-            .command(slackBody.get(SlackRequestParameters.COMMAND.getName()))
-            .text(slackBody.get(SlackRequestParameters.TEXT.getName()))
-            .responseUrl(slackBody.get(SlackRequestParameters.RESPONSE_URL.getName()))
-            .triggerId(slackBody.get(SlackRequestParameters.TRIGGER_ID.getName()))
-            .county(extractCounty(slackBody.get(SlackRequestParameters.TEXT.getName())))
-            .word(extractWord(slackBody.get(SlackRequestParameters.TEXT.getName())))
+            .token(params.get(TOKEN.getName()))
+            .teamId(params.get(TEAM_ID.getName()))
+            .teamDomain(params.get(TEAM_DOMAIN.getName()))
+            .channelId(params.get(CHANNEL_ID.getName()))
+            .channelName(params.get(CHANNEL_NAME.getName()))
+            .userId(params.get(USER_ID.getName()))
+            .userName(params.get(USER_NAME.getName()))
+            .command(params.get(COMMAND.getName()))
+            .text(params.get(TEXT.getName()))
+            .responseUrl(params.get(RESPONSE_URL.getName()))
+            .triggerId(params.get(TRIGGER_ID.getName()))
+            .county(extractCountyParam(params.get(TEXT.getName())))
+            .word(extractSearchParam(params.get(TEXT.getName())))
             .build();
     }
 
-    private static String extractWord(String word) {
+    private String extractSearchParam(String word) {
         if (hasExtraParameter(word)) {
             log.info("Found extra parameter(word): {}", word);
             int i = word.indexOf(EMPTY_SPACE);
@@ -38,7 +51,7 @@ public class SlackRequestMapper {
         }
     }
 
-    private static String extractCounty(String county) {
+    private String extractCountyParam(String county) {
         if (hasExtraParameter(county)) {
             log.info("Found extra parameter(word) while extracting county: {}", county);
             int i = county.indexOf(EMPTY_SPACE);
@@ -49,7 +62,7 @@ public class SlackRequestMapper {
         }
     }
 
-    private static boolean hasExtraParameter(String county) {
+    private boolean hasExtraParameter(String county) {
         return county.contains(EMPTY_SPACE);
     }
 }

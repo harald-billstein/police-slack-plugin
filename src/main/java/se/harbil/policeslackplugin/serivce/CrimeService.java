@@ -2,6 +2,9 @@ package se.harbil.policeslackplugin.serivce;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,12 +13,17 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
+import reactor.netty.http.client.HttpClient;
 import se.harbil.policeslackplugin.model.PoliceRssResponseModel;
 
 @Slf4j
@@ -29,7 +37,7 @@ public class CrimeService {
         for (String localFeed : localFeeds) {
             try {
                 log.info("Trying to retrieve incidents from polisen.se");
-                String response = call(localFeed);
+                String response = call2(localFeed);
                 log.info("Successfully retrieved incidents from polisen.se");
                 log.info("Trying to parse incidents from polisen.se");
                 policeRssResponseModelList.addAll(parseXML(response));
@@ -55,6 +63,27 @@ public class CrimeService {
         }
 
         return response;
+    }
+
+    @SneakyThrows
+    public String call2(String localFeed) {
+        WebClient webClient = WebClient.builder()
+            .clientConnector(new ReactorClientHttpConnector(getInsecureHttpClient()))
+            .baseUrl(baseURL + localFeed)
+            .build();
+
+        return webClient.get()
+            .retrieve()
+            .bodyToMono(String.class)
+            .block();
+    }
+
+    private HttpClient getInsecureHttpClient() throws SSLException {
+        SslContext sslContext = SslContextBuilder
+            .forClient()
+            .trustManager(InsecureTrustManagerFactory.INSTANCE)
+            .build();
+        return HttpClient.create().secure(t -> t.sslContext(sslContext));
     }
 
     private List<PoliceRssResponseModel> parseXML(String XMLString) throws Exception {

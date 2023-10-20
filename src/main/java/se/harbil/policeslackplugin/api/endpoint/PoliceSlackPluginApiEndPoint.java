@@ -1,12 +1,9 @@
-package se.harbil.policeslackplugin.endpoint;
+package se.harbil.policeslackplugin.api.endpoint;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +48,6 @@ public class PoliceSlackPluginApiEndPoint {
     }
 
     private void test(String code) {
-        // curl -F code=1234 -F client_id=3336676.569200954261 -F client_secret=ABCDEFGH https:
         try {
             URL url = new URL("https://slack.com/api/oauth.v2.access?code=" + code
                 + "&client_id=" + slackClientId + "&client_secret=" + slackClientSecret + "&redirect_uri=" + slackRedirectUrl);
@@ -70,37 +66,8 @@ public class PoliceSlackPluginApiEndPoint {
                 content.append(inputLine);
             }
             log.info("Content: {}", content.toString());
-
-            // Map<String, String> parameters = new HashMap<>();
-            // parameters.put("code", code);
-
-            //con.setDoOutput(true);
-            //DataOutputStream out = new DataOutputStream(con.getOutputStream());
-            //out.writeBytes(getParamsString(parameters));
-            //out.flush();
-            //out.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
-    public static String getParamsString(Map<String, String> params)
-        throws UnsupportedEncodingException {
-        StringBuilder result = new StringBuilder();
-
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            result.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8));
-            result.append("&");
-        }
-
-        String resultString = result.toString();
-        return resultString.length() > 0
-            ? resultString.substring(0, resultString.length() - 1)
-            : resultString;
-    }
-
 }
