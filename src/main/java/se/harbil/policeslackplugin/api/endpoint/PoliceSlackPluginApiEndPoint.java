@@ -31,7 +31,6 @@ public class PoliceSlackPluginApiEndPoint {
     @Value("${slack.redirect.url}")
     private String slackRedirectUrl;
 
-
     @PostMapping("/report")
     public void getReport(@RequestParam Map<String, String> slackBody) {
         RequestFromSlack requestFromSlack = SlackRequestMapper.mapSlackBody(slackBody);
